@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/test")
 public class TestApiController {
 
-    @GetMapping("/test")
+    @GetMapping("/message")
     public String helloWorld() {
-        return "Hello World from Api Controller! \uD83D\uDC31";
+        return "Hello World from Api Controller!";
     }
 
 }
