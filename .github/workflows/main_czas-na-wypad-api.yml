@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.war'
+          path: '${{ github.workspace }}/target/ROOT.war'
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,5 +50,5 @@ jobs:
         with:
           app-name: 'czas-na-wypad-api'
           slot-name: 'Production'
-          package: '*.war'
+          package: 'ROOT.war'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_76A1F181829F43F9BC334252598510FD }}
