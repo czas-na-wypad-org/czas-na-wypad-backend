@@ -7,14 +7,8 @@ CREATE TABLE user (
     password VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
     surname VARCHAR(200) NOT NULL,
-    email VARCHAR(320) NOT NULL,
-    phone VARCHAR(20),
-	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
-);
-
-CREATE TABLE `group` (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    email VARCHAR(320),
+    photo VARCHAR(500),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
@@ -33,43 +27,10 @@ CREATE TABLE attraction (
     phone VARCHAR(20),
     email VARCHAR(320),
     website VARCHAR(500),
+	photo VARCHAR(500),
 	is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     SPATIAL INDEX (localization)
 ) ENGINE=InnoDB;
-
-CREATE TABLE User_permissions (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    permission VARCHAR(50) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-);
-
-CREATE TABLE user_friends (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    friend_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    FOREIGN KEY (friend_id) REFERENCES user(id) ON DELETE CASCADE
-);
-
-CREATE TABLE user_message (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    message_from INT NOT NULL,
-    message_to INT NOT NULL,
-    is_group BOOLEAN NOT NULL,
-    message VARCHAR(5000) NOT NULL,
-    date DATE NOT NULL,
-    time TIME NOT NULL,
-    FOREIGN KEY (message_from) REFERENCES user(id)
-);
-
-CREATE TABLE group_users (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    group_id INT NOT NULL,
-    user_id INT NOT NULL,
-    FOREIGN KEY (group_id) REFERENCES `group`(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-);
 
 CREATE TABLE attraction_ratings (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
