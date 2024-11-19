@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +16,7 @@ public class AttractionService {
     private final AttractionRepository attractionRepository;
 
     public List<Attraction> getAllAttractions() {
+        log.debug("getAllAttractions() called");
         return attractionRepository.findAll();
     }
 

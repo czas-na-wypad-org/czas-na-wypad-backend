@@ -3,7 +3,6 @@ package sggw.wzim.czasnawypad.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
@@ -27,17 +26,10 @@ public class SwaggerConfig {
 
     private Info getInfo() {
         return new Info()
-                .title("Dokumentacja API czas-na-wypad")
-                .description("Dokumentacja API, którym posługuje się serwis czas-na-wypad")
-                .version("1.0")
-                .license(getLicense());
+                .title("Documentation for czas-na-wypad-backend")
+                .version("0.0.1");
     }
 
-    private License getLicense() {
-        return new License()
-                .name("Your")
-                .url("http://localhost:8080/home");
-    }
 
     private void addSecurity(OpenAPI openApi) {
         var components = createComponents();
@@ -57,7 +49,6 @@ public class SwaggerConfig {
 
     private SecurityScheme createSecurityScheme() {
         return new SecurityScheme()
-                .name(SCHEME_NAME)
                 .type(SecurityScheme.Type.HTTP)
                 .scheme(SCHEME);
     }

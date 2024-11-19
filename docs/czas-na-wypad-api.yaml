@@ -1,8 +1,7 @@
 openapi: 3.0.1
 info:
   title: "Documentation for czas-na-wypad-backend"
-  description: "Dokumentacja API, którym posługuje się serwis czas-na-wypad"
-  version: '1.0'
+  version: '0.0.1'
 servers:
   - url: http://localhost:8080
     description: Generated server url
