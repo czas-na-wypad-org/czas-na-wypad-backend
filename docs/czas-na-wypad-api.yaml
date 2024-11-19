@@ -1,0 +1,71 @@
+openapi: 3.0.1
+info:
+  title: "Documentation for czas-na-wypad-backend"
+  description: "Dokumentacja API, którym posługuje się serwis czas-na-wypad"
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+security:
+  - BearerAuth: []
+paths:
+  /attractions:
+    get:
+      tags:
+        - attraction-controller
+      operationId: getAllAttractions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attraction'
+components:
+  schemas:
+    Attraction:
+      type: object
+      properties:
+        name:
+          description: Name of the attraction
+          maxLength: 200
+          minLength: 1
+          type: string
+        type:
+          type: string
+        priceLevel:
+          type: string
+        description:
+          type: string
+        postCode:
+          type: string
+        city:
+          type: string
+        street:
+          type: string
+        buildingNumber:
+          type: string
+        localNumber:
+          type: string
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        phone:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        photo:
+          type: string
+        isDeleted:
+          type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: Bearer

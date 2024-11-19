@@ -17,12 +17,7 @@ public class AttractionService {
     private final AttractionRepository attractionRepository;
 
     public List<Attraction> getAllAttractions() {
-        List<Attraction> attractions = new ArrayList<>();
-        Iterable<Attraction> iterable = attractionRepository.findAll();
-        while (iterable.iterator().hasNext()) {
-            attractions.add(iterable.iterator().next());
-        }
-        return attractions;
+        return attractionRepository.findAll();
     }
 
 }
