@@ -44,6 +44,8 @@ public class TestApiController {
 
         attraction = attractionRepository.save(attraction);
 
+        attraction = attractionRepository.findById(attraction.getId()).orElseThrow();
+
         return new ResponseEntity<>(attraction, HttpStatus.OK);
     }
 
