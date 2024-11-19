@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: root
+    password: q1w2e3r4T
+    url: jdbc:mysql://localhost:3306/czas-na-wypad
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
