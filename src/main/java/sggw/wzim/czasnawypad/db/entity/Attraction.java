@@ -1,7 +1,5 @@
 package sggw.wzim.czasnawypad.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.locationtech.jts.geom.Point;
 
 @Entity
 @Getter
@@ -46,9 +43,10 @@ public class Attraction {
     private String buildingNumber;
     @Column(name = "local_number")
     private String localNumber;
-    @NotNull
-    @Column(nullable = false, columnDefinition = "POINT NOT NULL SRID 4326")
-    private Point localization;
+    @Column(name = "loc_x")
+    private Double longitude;
+    @Column(name = "loc_y")
+    private Double latitude;
     private String phone;
     private String email;
     private String website;

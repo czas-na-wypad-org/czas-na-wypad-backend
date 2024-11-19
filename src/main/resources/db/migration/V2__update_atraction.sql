@@ -1,0 +1,4 @@
+ALTER TABLE attraction DROP COLUMN localization;
+
+ALTER TABLE attraction ADD COLUMN loc_x DECIMAL(6,3) NOT NULL;
+ALTER TABLE attraction ADD COLUMN loc_y DECIMAL(6,3) NOT NULL;
