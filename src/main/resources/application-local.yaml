@@ -1,9 +1,13 @@
 spring:
   datasource:
-    username: root
-    password: q1w2e3r4T
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     url: jdbc:mysql://localhost:3306/czas-na-wypad
   jpa:
-    show-sql: true
+    generate-ddl: false
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
