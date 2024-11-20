@@ -51,4 +51,16 @@ public class AttractionRatingService {
                 .date(rating.getDate())
                 .build();
     }
+
+    public List<Attraction> findAttractionsByMinimumAverageRating(double minRating) {
+        List<Object[]> results = ratingRepository.findAttractionsByMinimumAverageRating(minRating);
+
+        // Mapowanie wyników do listy atrakcji
+        List<Long> attractionIds = results.stream()
+                .map(result -> (Long) result[0]) // ID atrakcji
+                .toList();
+
+        // Pobierz pełne obiekty Attraction
+        return attractionRepository.findAllById(attractionIds);
+    }
 }
