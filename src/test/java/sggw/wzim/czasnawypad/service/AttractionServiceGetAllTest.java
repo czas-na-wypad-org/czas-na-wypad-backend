@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
+import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.mapper.AttractionDTOMapper;
 
 import java.util.List;
 
@@ -17,29 +19,39 @@ class AttractionServiceGetAllTest {
 
     private AttractionRepository attractionRepository;
 
+    private AttractionDTOMapper attractionDTOMapper;
+
     private AttractionService underTest;
 
     @BeforeEach
     void init() {
         this.attractionRepository = mock(AttractionRepository.class);
-        this.underTest = new AttractionService(attractionRepository);
+        this.attractionDTOMapper = mock(AttractionDTOMapper.class);
+        this.underTest = new AttractionService(attractionRepository, attractionDTOMapper);
     }
 
     @Test
-    @DisplayName("""
-            Given existing attractions
-            should return them
-            """)
+    @DisplayName("Given existing attractions in database should return them")
     void getAllAttractions() {
         // given
-        List<Attraction> expected = List.of(getAttraction(1, "test1"), getAttraction(2, "test2"));
-        when(attractionRepository.findAll()).thenReturn(expected);
+        List<Attraction> attractions = List.of(getAttraction(1, "test1"), getAttraction(2, "test2"));
+        List<AttractionDTO> expected = List.of(getAttractionDTO("test1"), getAttractionDTO("test2"));
+        when(attractionRepository.findAll()).thenReturn(attractions);
+        when(attractionDTOMapper.fromList(attractions)).thenReturn(expected);
 
         // when
-        List<Attraction> actual = underTest.getAllAttractions();
+        List<AttractionDTO> actual = underTest.getAllAttractions();
 
         // then
         assertEquals(expected, actual);
+    }
+
+    private AttractionDTO getAttractionDTO(String name) {
+        return AttractionDTO.builder()
+                .name(name)
+                .longitude(25.45)
+                .latitude(45.25)
+                .build();
     }
 
     private Attraction getAttraction(Integer id, String name) {

@@ -21,49 +21,118 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Attraction'
+                  $ref: '#/components/schemas/AttractionDTO'
+              example:
+                name: Pomnik
+                type: MONUMENT
+                priceLevel: LOW
+                postCode: "00-001"
+                city: "Warsaw"
+                street: "ul. Warszawska"
+                buildingNumber: "1"
+                localNumber: null
+                longitude: 34.458
+                latitude: 12.319
+                phone: "+48221000000"
+                email: "example@email.com"
+                website: "https://example.attraction.website/attraction"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                statusCode: 403
+                message: 'Access to this resource is forbidden'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDTO'
+              example:
+                statusCode: 500
+                message: "Something went wrong. Try again later."
+
 components:
   schemas:
-    Attraction:
+    AttractionDTO:
       type: object
       properties:
         name:
+          type: string
           description: Name of the attraction
           maxLength: 200
           minLength: 1
-          type: string
         type:
           type: string
+          description: Type of the attraction
+          enum:
+            - RESTAURANT
+            - MONUMENT
+            - SIGHTSEEING_LOCATION
         priceLevel:
           type: string
+          description: Symbolizes the prices level associated with this place.
+          enum:
+            - VERY_HIGH
+            - HIGH
+            - MEDIUM
+            - LOW
         description:
           type: string
+          description: General description of the attraction
         postCode:
           type: string
+          description: Location post code of the attraction
         city:
           type: string
+          description: City in which the attraction is located
         street:
           type: string
+          description: Street name where the attraction is located
         buildingNumber:
           type: string
+          description: Building number of the attraction
         localNumber:
           type: string
+          description: (If applicable) Premises number of the attraction
         longitude:
           type: number
+          description: Longitude of where the attraction is located at (used for locating attractions)
           format: double
         latitude:
           type: number
+          description: Latitude of where the attraction is located at (used for locating attractions)
           format: double
         phone:
           type: string
+          description: Phone number of the company which is responsible for the attraction
         email:
           type: string
+          description: Email of the company which is responsible for the attraction
         website:
           type: string
-        photo:
+          description: Company's website that talks about the attraction
+    ErrorResponseDTO:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP Status code value of the error
+          example: 401
+        message:
           type: string
-        isDeleted:
-          type: boolean
+          description: Error message
+          example: 'Unauthorized. Access token is missing or invalid.'
+
   securitySchemes:
     BearerAuth:
       type: http

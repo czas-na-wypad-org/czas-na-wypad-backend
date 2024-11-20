@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
+import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.mapper.AttractionDTOMapper;
 
 import java.util.List;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class AttractionService {
 
     private final AttractionRepository attractionRepository;
+    private final AttractionDTOMapper attractionDTOMapper;
 
-    public List<Attraction> getAllAttractions() {
+    public List<AttractionDTO> getAllAttractions() {
         log.debug("getAllAttractions() called");
-        return attractionRepository.findAll();
+        List<Attraction> attractions = attractionRepository.findAll();
+        return attractionDTOMapper.fromList(attractions);
     }
 
 }
