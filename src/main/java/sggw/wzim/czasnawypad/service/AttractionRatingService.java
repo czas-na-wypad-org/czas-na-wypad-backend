@@ -32,7 +32,7 @@ public class AttractionRatingService {
         List<AttractionRating> ratings = ratingRepository.findByAttractionId(attractionId);
         return mapper.toDtoList(ratings);
     }
-    
+
     public List<AttractionRatingDTO> getRatingsByUser(Integer userId) {
         List<AttractionRating> ratings = ratingRepository.findByUserId(userId);
         return mapper.toDtoList(ratings);
