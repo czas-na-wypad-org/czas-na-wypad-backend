@@ -19,7 +19,7 @@ import sggw.wzim.czasnawypad.db.entity.User;
 public interface AttractionRatingRepository extends JpaRepository<AttractionRating, Integer> {
     List<AttractionRating> findByUserId(Integer userId);
     List<AttractionRating> findByAttractionId(Integer attractionId);
-    
+
     @Query("SELECT new sggw.wzim.czasnawypad.db.dto.AttractionAverageRatingDTO(r.attraction.id, r.attraction.name, AVG(r.rating) ) " +
            "FROM AttractionRating r " +
            "GROUP BY r.attraction.id, r.attraction.name " +

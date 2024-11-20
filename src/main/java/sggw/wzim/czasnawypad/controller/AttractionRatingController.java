@@ -34,7 +34,7 @@ public class AttractionRatingController {
         List<AttractionRatingDTO> attractionRatings = ratingService.getRatingsForAttraction(attractionId);
         return ResponseEntity.ok(attractionRatings);
     }
-    
+
     @GetMapping
     public ResponseEntity<?> getUserRatings(Integer userId) {
         List<AttractionRatingDTO> userRatings = ratingService.getRatingsByUser(userId);
@@ -50,7 +50,7 @@ public class AttractionRatingController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRating(@PathVariable Integer id,
                                           Integer userId,
-                                             @RequestBody CreateAttractionRatingDTO dto) {
+                                          @RequestBody CreateAttractionRatingDTO dto) {
         AttractionRatingDTO updatedRatingDTO = ratingService.updateRating(id, userId, dto);
         return ResponseEntity.ok(updatedRatingDTO);
     }
