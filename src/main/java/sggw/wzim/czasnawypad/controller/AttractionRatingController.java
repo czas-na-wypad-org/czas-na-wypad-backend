@@ -25,6 +25,11 @@ public class AttractionRatingController {
 
     private final AttractionRatingService ratingService;
 
+    @GetMapping("/attraction/{attractionId}")
+    public List<AttractionRatingDTO> getRatingsForAttraction(@PathVariable Long attractionId) {
+        return ratingService.getRatingsForAttraction(attractionId);
+    }
+    
     @GetMapping
     public List<AttractionRatingDTO> getUserRatings(@AuthenticationPrincipal User user) {
         return ratingService.getRatingsByUser(user);

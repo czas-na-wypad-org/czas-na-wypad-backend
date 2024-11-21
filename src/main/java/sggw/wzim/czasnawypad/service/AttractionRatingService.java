@@ -13,6 +13,13 @@ public class AttractionRatingService {
     private final AttractionRatingRepository ratingRepository;
     private final AttractionRepository attractionRepository; // repository z atrakcji
 
+    public List<AttractionRatingDTO> getRatingsForAttraction(Long attractionId) {
+        List<AttractionRating> ratings = ratingRepository.findByAttractionId(attractionId);
+        return ratings.stream()
+                      .map(this::toDto)
+                      .collect(Collectors.toList());
+    }
+    
     public List<AttractionRatingDTO> getRatingsByUser(User user) {
         return ratingRepository.findByUser(user).stream().map(this::toDto).collect(Collectors.toList());
     }
