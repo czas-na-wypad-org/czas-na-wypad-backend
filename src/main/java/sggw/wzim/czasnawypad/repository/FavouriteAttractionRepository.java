@@ -13,5 +13,4 @@ public interface FavouriteAttractionRepository extends JpaRepository<FavouriteAt
     List<FavouriteAttraction> findByUser(User user);
     List<FavouriteAttraction> findByAttractionId(Long attractionId);
 
-    
 }
