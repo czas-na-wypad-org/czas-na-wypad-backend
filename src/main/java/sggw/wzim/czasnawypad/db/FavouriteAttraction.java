@@ -12,15 +12,14 @@ import lombok.*;
 public class FavouriteAttraction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "attraction_id", nullable = false)
-    	private Attraction attraction;
+    private Attraction attraction;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-    	private User user;
+    private User user;
 
-	
 }	
