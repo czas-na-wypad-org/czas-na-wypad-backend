@@ -131,7 +131,7 @@ components:
         message:
           type: string
           description: Error message
-          example: 'Unauthorized. Access token is missing or invalid.'
+          example: 'Unauthorized'
 
   securitySchemes:
     BearerAuth:

@@ -27,6 +27,6 @@ public interface AttractionDTOMapper {
 
     List<AttractionDTO> fromList(List<Attraction> attractions);
 
-    List<AttractionDTO> fromDTOList(List<AttractionDTO> attractionDTOS);
+    List<Attraction> fromDTOList(List<AttractionDTO> attractionDTOS);
 
 }
