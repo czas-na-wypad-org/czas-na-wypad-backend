@@ -5,6 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 
@@ -20,8 +24,6 @@ class AttractionDTOMapperTest {
     private static final String WEBSITE = "https://example.com";
     private static final String EMAIL = "test@email.com";
     private static final String PHONE = "+48999888777";
-    private static final double LATITUDE = 45.25;
-    private static final double LONGITUDE = 25.45;
     private static final String LOCAL_NUMBER = null;
     private static final String BUILDING_NUMBER = "1";
     private static final String STREET = "ul. Warszawska";
@@ -123,8 +125,7 @@ class AttractionDTOMapperTest {
                 .street(STREET)
                 .buildingNumber(BUILDING_NUMBER)
                 .localNumber(LOCAL_NUMBER)
-                .longitude(LONGITUDE)
-                .latitude(LATITUDE)
+                .localization(createPoint())
                 .phone(PHONE)
                 .email(EMAIL)
                 .website(WEBSITE)
@@ -142,12 +143,17 @@ class AttractionDTOMapperTest {
                 .street(STREET)
                 .buildingNumber(BUILDING_NUMBER)
                 .localNumber(LOCAL_NUMBER)
-                .longitude(LONGITUDE)
-                .latitude(LATITUDE)
+                .localization(createPoint())
                 .phone(PHONE)
                 .email(EMAIL)
                 .website(WEBSITE)
                 .build();
+    }
+
+    private static Point createPoint() {
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+
+        return geometryFactory.createPoint(new Coordinate());
     }
 
 

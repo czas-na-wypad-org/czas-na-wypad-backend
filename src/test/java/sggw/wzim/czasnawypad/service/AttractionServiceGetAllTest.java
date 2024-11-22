@@ -3,6 +3,10 @@ package sggw.wzim.czasnawypad.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
@@ -49,8 +53,7 @@ class AttractionServiceGetAllTest {
     private AttractionDTO getAttractionDTO(String name) {
         return AttractionDTO.builder()
                 .name(name)
-                .longitude(25.45)
-                .latitude(45.25)
+                .localization(createPoint())
                 .build();
     }
 
@@ -58,10 +61,15 @@ class AttractionServiceGetAllTest {
         return Attraction.builder()
                 .id(id)
                 .name(name)
-                .longitude(25.45)
-                .latitude(45.25)
+                .localization(createPoint())
                 .isDeleted(false)
                 .build();
+    }
+
+    private static Point createPoint() {
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
+
+        return geometryFactory.createPoint(new Coordinate());
     }
 
 }

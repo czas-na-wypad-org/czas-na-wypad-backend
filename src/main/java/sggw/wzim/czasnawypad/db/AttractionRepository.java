@@ -1,6 +1,7 @@
 package sggw.wzim.czasnawypad.db;
 
 import io.swagger.v3.oas.annotations.Hidden;
+import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,24 +14,37 @@ import java.util.List;
 @Repository
 public interface AttractionRepository extends JpaRepository<Attraction, Integer> {
 
-    List<Attraction> findAllByPriceLevelAndIsDeletedFalse(String priceLevel);
+    List<Attraction> findAllByIsDeletedFalse();
 
-    List<Attraction> findAllByTypeAndIsDeletedFalse(String type);
+    List<Attraction> findAllByIsDeletedFalseAndType(String type);
 
-    @Query(value = """
-                SELECT a FROM Attraction a
-                WHERE a.isDeleted = false AND (
-                    6371 * acos(
-                        cos(radians(:latitude)) * cos(radians(a.latitude)) *
-                        cos(radians(a.longitude) - radians(:longitude)) +
-                        sin(radians(:latitude)) * sin(radians(a.latitude))
-                    )
-                ) <= :maxDistance
-            """)
-    List<Attraction> findAllWithinDistance(
-            @Param("latitude") double latitude,
-            @Param("longitude") double longitude,
+    List<Attraction> findAllByIsDeletedFalseAndPriceLevel(String priceLevel);
+
+    @Query("SELECT a FROM Attraction a " +
+            "WHERE a.isDeleted = false " +
+            "AND ST_Distance(a.localization, :point) <= :maxDistance * 1000")
+    List<Attraction> findAllWithinDistanceAndNotDeleted(
+            @Param("point") Point point,
             @Param("maxDistance") double maxDistance
     );
+
+
+    @Query(value = """
+            SELECT a, 
+                   (
+                       6371 * acos(
+                           cos(radians(:latitude)) * cos(radians(CAST(ST_Y(a.localization) AS double))) *
+                           cos(radians(CAST(ST_X(a.localization) AS double)) - radians(:longitude)) +
+                           sin(radians(:latitude)) * sin(radians(CAST(ST_Y(a.localization) AS double)))
+                       )
+                   ) AS distance
+            FROM Attraction a
+            WHERE a.isDeleted = false
+            """)
+    List<Object[]> findAttractionsWithDistance(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude
+    );
+
 
 }
