@@ -12,4 +12,3 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
-    show-sql: true

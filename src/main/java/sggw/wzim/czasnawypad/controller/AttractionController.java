@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
-import sggw.wzim.czasnawypad.db.dto.AttractionWithDistance;
 import sggw.wzim.czasnawypad.model.ErrorResponseDTO;
 import sggw.wzim.czasnawypad.service.AttractionService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -197,24 +197,18 @@ public class AttractionController {
                     )
             }
     )
-    @GetMapping(value = "/attractions/location")
+    @GetMapping(value = "/attractions/location", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AttractionDTO>> getAllAttractionsByDistanceFromCustomer(
-            @RequestParam(name = "latitude") double latitude,
-            @RequestParam(name = "longitude") double longitude,
-            @RequestParam(name = "maxDistance") double maxDistance) {
+            @RequestParam(name = "latitude") BigDecimal latitude,
+            @RequestParam(name = "longitude") BigDecimal longitude,
+            @RequestParam(name = "maxDistance") BigDecimal maxDistance) {
         log.debug("GET getAllAttractionsByDistanceFromCustomer called");
-        if (maxDistance < 0.0) {
+        if (maxDistance.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("maxDistance must be greater than 0");
         }
         List<AttractionDTO> attractionsByDistanceFromCustomer = attractionService
                 .getAllAttractionsByDistanceFromCustomer(latitude, longitude, maxDistance);
         return new ResponseEntity<>(attractionsByDistanceFromCustomer, HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<List<AttractionWithDistance>> test(@RequestParam("lat") double lat,
-            @RequestParam("lng") double lng) {
-        return new ResponseEntity<>(attractionService.getAttractionsWithDistance(lat, lng), HttpStatus.OK);
     }
 
 

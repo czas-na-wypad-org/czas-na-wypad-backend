@@ -2,19 +2,14 @@ package sggw.wzim.czasnawypad.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
-import sggw.wzim.czasnawypad.db.dto.AttractionWithDistance;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.mapper.AttractionDTOMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -43,24 +38,14 @@ public class AttractionService {
         return attractionDTOMapper.fromList(attractionsByPriceLevel);
     }
 
-    public List<AttractionDTO> getAllAttractionsByDistanceFromCustomer(double latitude,
-            double longitude,
-            double maxDistance) {
-        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
-        Point point = geometryFactory.createPoint(new Coordinate(latitude, longitude));
-
-        // Query the database using the repository method
+    public List<AttractionDTO> getAllAttractionsByDistanceFromCustomer(
+            BigDecimal latitude,
+            BigDecimal longitude,
+            BigDecimal maxDistance) {
+        log.debug("getAllAttractionsByDistanceFromCustomer() called");
         List<Attraction> allWithinDistanceAndNotDeleted = attractionRepository
-                .findAllWithinDistanceAndNotDeleted(point, maxDistance);
+                .findAllWithinDistance(latitude, longitude, maxDistance);
         return attractionDTOMapper.fromList(allWithinDistanceAndNotDeleted);
-    }
-
-    public List<AttractionWithDistance> getAttractionsWithDistance(double latitude, double longitude) {
-        List<Object[]> results = attractionRepository.findAttractionsWithDistance(latitude, longitude);
-
-        return results.stream()
-                .map(result -> new AttractionWithDistance((Attraction) result[0], (Double) result[1]))
-                .collect(Collectors.toList());
     }
 
 }

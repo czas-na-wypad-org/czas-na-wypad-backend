@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("AttractionService Get All Attractions test")
-class AttractionServiceGetAllTest {
+@DisplayName("AttractionService Get All IsDeleted False Attractions test")
+class AttractionServiceGetAllIsDeletedFalseTest {
 
     private AttractionRepository attractionRepository;
 
@@ -40,7 +40,7 @@ class AttractionServiceGetAllTest {
         // given
         List<Attraction> attractions = List.of(getAttraction(1, "test1"), getAttraction(2, "test2"));
         List<AttractionDTO> expected = List.of(getAttractionDTO("test1"), getAttractionDTO("test2"));
-        when(attractionRepository.findAll()).thenReturn(attractions);
+        when(attractionRepository.findAllByIsDeletedFalse()).thenReturn(attractions);
         when(attractionDTOMapper.fromList(attractions)).thenReturn(expected);
 
         // when

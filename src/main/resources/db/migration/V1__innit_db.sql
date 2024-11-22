@@ -20,7 +20,7 @@ CREATE TABLE attraction (
                             street VARCHAR(200),
                             building_number VARCHAR(20),
                             local_number VARCHAR(20),
-                            localization POINT NOT NULL SRID 4326,
+                            localization GEOMETRY NOT NULL SRID 4326,
                             phone VARCHAR(20),
                             email VARCHAR(320),
                             website VARCHAR(500),
