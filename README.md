@@ -1,4 +1,4 @@
-<center><h1>czas-na-wypad API</h1></center>
+<h1 align="center">czas-na-wypad API</h1>
 
 # Podsumowanie
 
