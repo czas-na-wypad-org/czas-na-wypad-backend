@@ -2,7 +2,9 @@ package sggw.wzim.czasnawypad.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
@@ -12,14 +14,16 @@ import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.mapper.AttractionDTOMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("AttractionService Get All IsDeleted False Attractions test")
-class AttractionServiceGetAllIsDeletedFalseTest {
+@DisplayName("Attraction Service Get All By Distance From Customer Test")
+class AttractionServiceGetAllByDistanceFromCustomerTest {
 
     private AttractionRepository attractionRepository;
 
@@ -34,34 +38,49 @@ class AttractionServiceGetAllIsDeletedFalseTest {
         this.underTest = new AttractionService(attractionRepository, attractionDTOMapper);
     }
 
-    @Test
-    @DisplayName("Given existing attractions in database should return them")
-    void getAllAttractions() {
+    @ParameterizedTest
+    @MethodSource
+    void getAllAttractionsByDistanceFromCustomer(List<Attraction> attractions, List<AttractionDTO> expected) {
         // given
-        List<Attraction> attractions = List.of(getAttraction(1, "test1"), getAttraction(2, "test2"));
-        List<AttractionDTO> expected = List.of(getAttractionDTO("test1"), getAttractionDTO("test2"));
-        when(attractionRepository.findAllByIsDeletedFalse()).thenReturn(attractions);
+        String priceLevel = "monument";
+        when(attractionRepository.findAllWithinDistance(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE))
+                .thenReturn(attractions);
         when(attractionDTOMapper.fromList(attractions)).thenReturn(expected);
 
         // when
-        List<AttractionDTO> actual = underTest.getAllAttractions();
+        List<AttractionDTO> actual = underTest
+                .getAllAttractionsByDistanceFromCustomer(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE);
 
         // then
         assertEquals(expected, actual);
     }
 
-    private AttractionDTO getAttractionDTO(String name) {
+    private static Stream<Arguments> getAllAttractionsByDistanceFromCustomer() {
+        return Stream.of(
+                Arguments.of(
+                        List.of(), List.of()
+                ),
+                Arguments.of(
+                        List.of(getAttraction(1, "test1", "monument"), getAttraction(2, "test2", "monument")),
+                        List.of(getAttractionDTO("test1", "monument"), getAttractionDTO("test2", "monument"))
+                )
+        );
+    }
+
+    private static AttractionDTO getAttractionDTO(String name, String priceLevel) {
         return AttractionDTO.builder()
                 .name(name)
                 .localization(createPoint())
+                .priceLevel(priceLevel)
                 .build();
     }
 
-    private Attraction getAttraction(Integer id, String name) {
+    private static Attraction getAttraction(Integer id, String name, String priceLevel) {
         return Attraction.builder()
                 .id(id)
                 .name(name)
                 .localization(createPoint())
+                .priceLevel(priceLevel)
                 .isDeleted(false)
                 .build();
     }
