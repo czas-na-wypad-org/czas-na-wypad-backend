@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
                       id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       login VARCHAR(50) NOT NULL,
                       password VARCHAR(100) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE user (
                       is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE attraction (
+CREATE TABLE IF NOT EXISTS attraction (
                             id INT PRIMARY KEY AUTO_INCREMENT,
                             name VARCHAR(200) NOT NULL,
                             type VARCHAR(100),
@@ -29,7 +29,7 @@ CREATE TABLE attraction (
                             SPATIAL INDEX (localization)
 ) ENGINE=InnoDB;
 
-CREATE TABLE attraction_ratings (
+CREATE TABLE IF NOT EXISTS attraction_ratings (
                                     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                     attraction_id INT NOT NULL,
                                     user_id INT NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE attraction_ratings (
                                     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE TABLE attraction_favourite (
+CREATE TABLE IF NOT EXISTS attraction_favourite (
                                       id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                       attraction_id INT NOT NULL,
                                       user_id INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE attraction_favourite (
                                       FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE attraction_reservation (
+CREATE TABLE IF NOT EXISTS attraction_reservation (
                                         id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                         user_id INT NOT NULL,
                                         attraction_id INT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE attraction_reservation (
                                         FOREIGN KEY (attraction_id) REFERENCES attraction(id) ON DELETE CASCADE
 );
 
-CREATE TABLE attraction_hour (
+CREATE TABLE IF NOT EXISTS attraction_hour (
                                  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                                  attraction_id INT NOT NULL,
                                  hour_from TIME,
@@ -73,7 +73,7 @@ CREATE TABLE attraction_hour (
 
 DELIMITER //
 
-CREATE TRIGGER after_attraction_insert
+CREATE TRIGGER IF NOT EXISTS after_attraction_insert
     AFTER INSERT ON attraction
     FOR EACH ROW
 BEGIN
