@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">czas-na-wypad API</h1>
+<center><h1>czas-na-wypad API</h1></center>
 
 # Podsumowanie
 
@@ -18,8 +18,10 @@ Podczas instalacji należy wybrać MySQL Server 8.0.40 oraz MySQL Workbench 8.0.
 Podczas instalacji hasło do konta `root` w bazie danych należy ustawić na: `q1w2e3r4T`.
 
 Po instalacji oprogramowania należy uruchomić program MySQL Workbench. Przy pierwszym uruchomieniu poprosi on nas o skonfigurowanie połączenia do bazy danych, w którym należy podać hasło (podane powyżej) do użytkownika `root`.
-Następnie po prawidłowym połączeniu, w interfejsie użytkownika zmienić z `Administration` na `Schemas`: ![workbench](docs/workbench_1.png).
+Następnie po prawidłowym połączeniu, w interfejsie użytkownika zmienić z `Administration` na `Schemas`: ![workbench](docs/workbench_1.png)
+
 W widocznym edytorze `Query1` należy wykonać polecenie:
+
 ```sql
 CREATE SCHEMA IF NOT EXIST czas_na_wypad;
 ```
