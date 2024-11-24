@@ -12,5 +12,5 @@ import sggw.wzim.czasnawypad.db.FavouriteAttraction;
 public interface FavouriteAttractionRepository extends JpaRepository<FavouriteAttraction, Long> {
     List<FavouriteAttraction> findByUser(User user);
     List<FavouriteAttraction> findByAttractionId(Long attractionId);
-
+    
 }
