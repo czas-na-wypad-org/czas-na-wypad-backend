@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
                       surname VARCHAR(200) NOT NULL,
                       email VARCHAR(320),
                       photo VARCHAR(500),
+                      roles VARCHAR(30) NOT NULL,
                       is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
