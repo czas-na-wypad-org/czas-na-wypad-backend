@@ -10,7 +10,6 @@ import java.util.List;
 @Hidden
 @Repository
 public interface FavouriteAttractionRepository extends JpaRepository<FavouriteAttraction, Integer> {
-
     List<FavouriteAttraction> findByUserId(Integer userId);
     List<FavouriteAttraction> findByAttractionId(Integer attractionId);
 
