@@ -9,5 +9,4 @@ public class FavouriteAttractionDTO {
 	private Integer id;
 	private Integer attractionId;
 	private Integer userId;
-
 }
