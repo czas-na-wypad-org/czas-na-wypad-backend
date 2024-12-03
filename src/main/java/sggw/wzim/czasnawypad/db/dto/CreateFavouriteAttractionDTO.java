@@ -10,5 +10,4 @@ public class CreateFavouriteAttractionDTO {
 	@NotNull
 	private Integer userId;
 
-
 }	
