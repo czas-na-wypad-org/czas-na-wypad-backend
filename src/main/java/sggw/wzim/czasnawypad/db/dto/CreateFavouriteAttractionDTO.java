@@ -9,5 +9,6 @@ public class CreateFavouriteAttractionDTO {
 	private Integer attractionId;
 	@NotNull
 	private Integer userId;
-}
 
+
+}
