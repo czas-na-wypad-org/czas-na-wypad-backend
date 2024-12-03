@@ -16,7 +16,7 @@ import sggw.wzim.czasnawypad.service.FavouriteAttractionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ratings")
+@RequestMapping("/favourites")
 @RequiredArgsConstructor
 public class AttractionFavouriteController {
 
@@ -29,7 +29,7 @@ public class AttractionFavouriteController {
 
     @PostMapping
     public FavouriteAttractionDTO addFavourite(@AuthenticationPrincipal User user,
-                                        @Valid @RequestBody CreateFavouriteAttractionDTO dto) {
+                                               @Valid @RequestBody CreateFavouriteAttractionDTO dto) {
         return favouriteService.addFavourite(user, dto);
     }
 
