@@ -9,4 +9,6 @@ public class CreateFavouriteAttractionDTO {
 	private Long attractionId;
 	@NotNull
 	private Long userId;
+
+
 }	
