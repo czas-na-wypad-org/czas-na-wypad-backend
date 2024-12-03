@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class FavouriteAttractionDTO {
-	private Long id;
-	private Long attractionId;
-	private Long userId;
+	private Integer id;
+	private Integer attractionId;
+	private Integer userId;
 }	

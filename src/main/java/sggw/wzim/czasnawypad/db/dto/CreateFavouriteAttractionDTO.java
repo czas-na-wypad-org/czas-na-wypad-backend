@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CreateFavouriteAttractionDTO {
 	@NotNull
-	private Long attractionId;
+	private Integer attractionId;
 	@NotNull
-	private Long userId;
+	private Integer userId;
 }	

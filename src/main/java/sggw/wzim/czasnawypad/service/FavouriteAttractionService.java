@@ -1,10 +1,20 @@
 package sggw.wzim.czasnawypad.service;
 
-import sggw.wzim.czasnawypad.db.FavouriteAttraction;
-import sggw.wzim.czasnawypad.db.dto.FavouriteAttractionDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import sggw.wzim.czasnawypad.db.AttractionRepository;
+import sggw.wzim.czasnawypad.db.FavouriteAttractionRepository;
 import sggw.wzim.czasnawypad.db.dto.CreateFavouriteAttractionDTO;
-import sggw.wzim.czasnawypad.repository.AttractionRatingRepository;
+import sggw.wzim.czasnawypad.db.dto.FavouriteAttractionDTO;
+import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.db.entity.FavouriteAttraction;
+import sggw.wzim.czasnawypad.db.entity.User;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
 public class FavouriteAttractionService {
 	private final FavouriteAttractionRepository favouriteRepository;
 	private final AttractionRepository attractionRepository;
