@@ -10,4 +10,4 @@ public class FavouriteAttractionDTO {
 	private Integer attractionId;
 	private Integer userId;
 
-}	
+}
