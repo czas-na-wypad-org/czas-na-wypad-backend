@@ -1,12 +1,19 @@
-package sggw.wzim.czasnawypad.dto;
+package sggw.wzim.czasnawypad.db.dto;
 
-import lombok.Data;
+import lombok.*;
+import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class AttractionHourDTO {
-    private Long id;
-    private Long attractionId;
-    private String openingTime;
-    private String closingTime;
+    private Integer id;
+    private Integer attractionId;
+    private LocalTime hourFrom;
+    private LocalTime hourTo;
     private String dayOfWeek;
 }

@@ -1,25 +1,33 @@
 package sggw.wzim.czasnawypad.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "attraction_hour")
-@Data
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class AttractionHour {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "attraction_id", nullable = false)
-    private Long attractionId;
+    private Integer attractionId;
 
-    @Column(name = "opening_time", nullable = false)
-    private String openingTime;
+    @Column(name = "hour_from", nullable = false)
+    private LocalTime hourFrom;
 
-    @Column(name = "closing_time", nullable = false)
-    private String closingTime;
+    @Column(name = "hour_to", nullable = false)
+    private LocalTime hourTo;
 
-    @Column(name = "day_of_week", nullable = false)
+    @Column(name = "day_of_week", nullable = false, length = 20)
     private String dayOfWeek;
 }
