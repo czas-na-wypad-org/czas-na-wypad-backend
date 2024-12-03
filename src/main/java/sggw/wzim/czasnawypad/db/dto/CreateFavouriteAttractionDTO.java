@@ -10,5 +10,5 @@ public class CreateFavouriteAttractionDTO {
 	@NotNull
 	private Long userId;
 
-	
+
 }	
