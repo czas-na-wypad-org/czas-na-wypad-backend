@@ -2,7 +2,6 @@ package sggw.wzim.czasnawypad.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import sggw.wzim.czasnawypad.db.dto.CreateFavouriteAttractionDTO;
@@ -22,7 +21,7 @@ public class AttractionFavouriteController {
     private final FavouriteAttractionService favouriteService;
 
     @GetMapping
-    ResponseEntity<?> getFavouritesInfo(@RequestHeader User user) {
+    ResponseEntity<?> getFavouritesInfo(@RequestBody @Valid User user) {
         List<FavouriteAttractionDTO> favouriteInfo = favouriteService.getFavouritesByUser(user);
         return ResponseEntity.ok(favouriteInfo);
     }
