@@ -10,6 +10,7 @@ import sggw.wzim.czasnawypad.db.dto.FavouriteAttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.service.FavouriteAttractionService;
 
+import java.net.URI;
 
 import java.util.List;
 
