@@ -1,4 +1,4 @@
-package sggw.wzim.czasnawypad.model;
+package sggw.wzim.czasnawypad.db.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class AttractionRating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "attraction_id", nullable = false)
@@ -25,7 +25,7 @@ public class AttractionRating {
     private User user;
 
     @Column(nullable = false)
-    private Byte rating; // 1-5 scale, validate at the service layer
+    private Byte rating;
 
     @Column(length = 5000)
     private String notes;

@@ -1,4 +1,4 @@
-package sggw.wzim.czasnawypad.model.dto;
+package sggw.wzim.czasnawypad.db.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 public class CreateAttractionRatingDTO {
     @NotNull
-    private Long attractionId;
+    private int attractionId;
     @NotNull
     @Min(1)
     @Max(5)
-    private Byte rating; // 1-5
+    private Byte rating;
     private String notes;
 }

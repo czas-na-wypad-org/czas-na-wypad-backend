@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import sggw.wzim.czasnawypad.model.dto.AttractionRatingDTO;
-import sggw.wzim.czasnawypad.model.dto.CreateAttractionRatingDTO;
+import sggw.wzim.czasnawypad.db.dto.AttractionRatingDTO;
+import sggw.wzim.czasnawypad.db.dto.CreateAttractionRatingDTO;
+import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.service.AttractionRatingService;
 
 @RestController
@@ -26,7 +28,7 @@ public class AttractionRatingController {
     private final AttractionRatingService ratingService;
 
     @GetMapping("/attraction/{attractionId}")
-    public List<AttractionRatingDTO> getRatingsForAttraction(@PathVariable Long attractionId) {
+    public List<AttractionRatingDTO> getRatingsForAttraction(@PathVariable Integer attractionId) {
         return ratingService.getRatingsForAttraction(attractionId);
     }
     
@@ -42,7 +44,7 @@ public class AttractionRatingController {
     }
 
     @PutMapping("/{id}")
-    public AttractionRatingDTO updateRating(@PathVariable Long id,
+    public AttractionRatingDTO updateRating(@PathVariable Integer id,
                                              @AuthenticationPrincipal User user,
                                              @RequestBody CreateAttractionRatingDTO dto) {
         return ratingService.updateRating(id, user, dto);

@@ -1,4 +1,4 @@
-package sggw.wzim.czasnawypad.model.dto;
+package sggw.wzim.czasnawypad.db.dto;
 
 import java.time.LocalDate;
 
@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 @Builder
 public class AttractionRatingDTO {
-    private Long id;
-    private Long attractionId;
+    private Integer id;
+    private Integer attractionId;
     private String attractionName;
     private Byte rating;
     private String notes;
