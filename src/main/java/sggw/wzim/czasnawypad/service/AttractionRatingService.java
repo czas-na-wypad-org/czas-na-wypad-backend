@@ -4,16 +4,24 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import sggw.wzim.czasnawypad.model.AttractionRating;
-import sggw.wzim.czasnawypad.model.dto.AttractionRatingDTO;
-import sggw.wzim.czasnawypad.model.dto.CreateAttractionRatingDTO;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import sggw.wzim.czasnawypad.db.AttractionRepository;
+import sggw.wzim.czasnawypad.db.dto.AttractionRatingDTO;
+import sggw.wzim.czasnawypad.db.dto.CreateAttractionRatingDTO;
+import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.db.entity.AttractionRating;
+import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.repository.AttractionRatingRepository;
 
+@Service
+@RequiredArgsConstructor
 public class AttractionRatingService {
     private final AttractionRatingRepository ratingRepository;
-    private final AttractionRepository attractionRepository; // repository z atrakcji
+    private final AttractionRepository attractionRepository;
 
-    public List<AttractionRatingDTO> getRatingsForAttraction(Long attractionId) {
+    public List<AttractionRatingDTO> getRatingsForAttraction(Integer attractionId) {
         List<AttractionRating> ratings = ratingRepository.findByAttractionId(attractionId);
         return ratings.stream()
                       .map(this::toDto)
@@ -37,7 +45,7 @@ public class AttractionRatingService {
         return toDto(ratingRepository.save(rating));
     }
 
-    public AttractionRatingDTO updateRating(Long id, User user, CreateAttractionRatingDTO dto) {
+    public AttractionRatingDTO updateRating(Integer id, User user, CreateAttractionRatingDTO dto) {
         AttractionRating rating = ratingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Rating not found"));
         if (!rating.getUser().equals(user)) {
@@ -62,12 +70,10 @@ public class AttractionRatingService {
     public List<Attraction> findAttractionsByMinimumAverageRating(double minRating) {
         List<Object[]> results = ratingRepository.findAttractionsByMinimumAverageRating(minRating);
 
-        // Mapowanie wyników do listy atrakcji
-        List<Long> attractionIds = results.stream()
-                .map(result -> (Long) result[0]) // ID atrakcji
+        List<Integer> attractionIds = results.stream()
+                .map(result -> (Integer) result[0])
                 .toList();
 
-        // Pobierz pełne obiekty Attraction
         return attractionRepository.findAllById(attractionIds);
     }
 }
