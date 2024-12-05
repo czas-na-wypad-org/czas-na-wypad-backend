@@ -1,5 +1,7 @@
 package sggw.wzim.czasnawypad.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +33,10 @@ class UserController {
     }
 
     @GetMapping
-    ResponseEntity<?> getUserInfo(@RequestHeader String authorization) {
-        User userInfo = userService.getUserFromToken(authorization);
+    ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        bearerToken = bearerToken.substring("Bearer ".length());
+        User userInfo = userService.getUserFromToken(bearerToken);
         return ResponseEntity.ok(userInfo);
     }
 
