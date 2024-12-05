@@ -29,7 +29,7 @@ public class AttractionFavouriteController {
     @PostMapping
     ResponseEntity<?> addFavourite(@RequestBody @Valid CreateFavouriteAttractionDTO toAdd) {
         FavouriteAttractionDTO result = favouriteService.addFavourite(toAdd);
-        return ResponseEntity.created(URI.create("/" + result)).body(result);
+        return ResponseEntity.ok().body(result);
     }
 
 
