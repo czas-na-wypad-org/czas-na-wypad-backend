@@ -17,10 +17,9 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AttractionDTOMapper {
 
-    @BeanMapping(ignoreUnmappedSourceProperties = {"id", "photo", "isDeleted"})
+    @BeanMapping(ignoreUnmappedSourceProperties = {"photo", "isDeleted"})
     AttractionDTO fromEntity(Attraction attraction);
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "photo", ignore = true)
     @Mapping(target = "isDeleted", ignore = true)
     Attraction fromDTO(AttractionDTO attractionDTO);

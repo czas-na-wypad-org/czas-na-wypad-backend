@@ -2,6 +2,7 @@ package sggw.wzim.czasnawypad.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
@@ -46,6 +47,23 @@ public class AttractionService {
         List<Attraction> allWithinDistanceAndNotDeleted = attractionRepository
                 .findAllWithinDistance(latitude, longitude, maxDistance);
         return attractionDTOMapper.fromList(allWithinDistanceAndNotDeleted);
+    }
+
+    public List<AttractionDTO> getAllAttractionsByUserFilters(BigDecimal latitude,
+                                                              BigDecimal longitude,
+                                                              BigDecimal maxDistance,
+                                                              String type,
+                                                              String priceLevel) {
+        log.debug("getAllAttractionsByUserFilters() called");
+        List<Attraction> attractions;
+        if (StringUtils.isBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+             attractions = attractionRepository.findAllByIsDeletedFalseAndType(type);
+        } else if (StringUtils.isBlank(type) && StringUtils.isNotBlank(priceLevel)) {
+            attractions = attractionRepository.findAllByIsDeletedFalseAndPriceLevel(priceLevel);
+        } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+            attractions = attractionRepository.findAllByIsDeletedFalseAndPriceLevelAndType(priceLevel, type);
+        }
+        return null;
     }
 
 }

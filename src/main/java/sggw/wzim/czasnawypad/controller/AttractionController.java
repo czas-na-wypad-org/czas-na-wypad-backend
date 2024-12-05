@@ -21,6 +21,7 @@ import sggw.wzim.czasnawypad.service.AttractionService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -211,5 +212,60 @@ public class AttractionController {
         return new ResponseEntity<>(attractionsByDistanceFromCustomer, HttpStatus.OK);
     }
 
+    @ApiResponses(
+            value = {
+                    @ApiResponse(description = "Returns list of attractions filtered by either: maxDistance, priceLevel, type", responseCode = "200",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = AttractionDTO.class)))),
+                    @ApiResponse(
+                            description = "Unauthorized",
+                            responseCode = "401",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponseDTO.class),
+                                    examples = @ExampleObject(
+                                            value = "{\"statusCode\": 401, \"message\": \"Unauthorized\"}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            description = "Forbidden",
+                            responseCode = "403",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponseDTO.class),
+                                    examples = @ExampleObject(
+                                            value = "{\"statusCode\": 403, \"message\": \"Forbidden\"}"
+                                    )
+                            )
+                    ),
+                    @ApiResponse(
+                            description = "Internal Server Error",
+                            responseCode = "500",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponseDTO.class),
+                                    examples = @ExampleObject(
+                                            value = "{\"statusCode\": 500, \"message\": \"Internal Server Error\"}"
+                                    )
+                            )
+                    )
+            }
+    )
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AttractionDTO>> getAllAttractionsByUserFilters(
+            @RequestParam(name = "latitude") BigDecimal latitude,
+            @RequestParam(name = "longitude") BigDecimal longitude,
+            @RequestParam(name = "maxDistance") BigDecimal maxDistance,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "priceLevel", required = false) String priceLevel) {
+        log.debug("GET getAllAttractionsByUserFilters called");
+        List<AttractionDTO> attractionsByDistanceFromCustomer = attractionService
+                .getAllAttractionsByUserFilters(latitude, longitude, maxDistance, type, priceLevel);
+        return new ResponseEntity<>(attractionsByDistanceFromCustomer, HttpStatus.OK);
+    }
+
+    /*TODO:
+    - Filtrowanie po:
+     - kategoria
+     - poziom cen
+     - odległość od użytkownika
+     */
 
 }

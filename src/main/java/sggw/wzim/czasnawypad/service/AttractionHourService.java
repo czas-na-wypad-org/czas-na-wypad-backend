@@ -1,9 +1,9 @@
 package sggw.wzim.czasnawypad.service;
 
 import org.springframework.stereotype.Service;
+import sggw.wzim.czasnawypad.db.AttractionHourRepository;
+import sggw.wzim.czasnawypad.db.entity.AttractionHour;
 import sggw.wzim.czasnawypad.dto.AttractionHourDTO;
-import sggw.wzim.czasnawypad.model.AttractionHour;
-import sggw.wzim.czasnawypad.repository.AttractionHourRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

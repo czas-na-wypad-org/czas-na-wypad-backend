@@ -38,4 +38,6 @@ public interface AttractionRepository extends JpaRepository<Attraction, Integer>
             @Param("maxDistance") BigDecimal maxDistance
     );
 
+    List<Attraction> findAllByIsDeletedFalseAndPriceLevelAndType(String priceLevel, String type);
+
 }

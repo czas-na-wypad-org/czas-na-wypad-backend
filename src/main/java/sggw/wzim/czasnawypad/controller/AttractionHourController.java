@@ -8,7 +8,7 @@ import sggw.wzim.czasnawypad.service.AttractionHourService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/attraction-hours")
+@RequestMapping("/attraction-hours")
 public class AttractionHourController {
 
     private final AttractionHourService service;

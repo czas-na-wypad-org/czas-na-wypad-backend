@@ -1,0 +1,1 @@
+ALTER TABLE attraction MODIFY COLUMN name varchar(200) NOT NULL UNIQUE;
