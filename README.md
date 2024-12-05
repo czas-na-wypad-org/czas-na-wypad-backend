@@ -41,5 +41,5 @@ Poniższe zmienne środowiskowe należy dodać do `Run configuration`
 
 | Nazwa zmiennej      | Opis                                                   |
 |---------------------|--------------------------------------------------------|
-| DATASOURCE_USER     | Nazwa użytkownika, który zostanie użyty do bazy danych |
+| DATASOURCE_USERNAME | Nazwa użytkownika, który zostanie użyty do bazy danych |
 | DATASOURCE_PASSWORD | Hasło do użytkownika bazy danych                       |

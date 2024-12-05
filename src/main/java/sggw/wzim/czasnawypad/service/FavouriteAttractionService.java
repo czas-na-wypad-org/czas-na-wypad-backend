@@ -21,8 +21,8 @@ public class FavouriteAttractionService {
 	private final AttractionRepository attractionRepository;
 	private final UserRepository userRepository;
 
-	public List<FavouriteAttractionDTO> getFavouritesByUser (User user) {
-		return favouriteRepository.findByUser(user).stream().map(this::toDto).collect(Collectors.toList());
+	public List<FavouriteAttractionDTO> getFavouritesByUser (Integer userId) {
+		return favouriteRepository.findByUserId(userId).stream().map(this::toDto).collect(Collectors.toList());
 	}
 
 	public FavouriteAttractionDTO addFavourite(CreateFavouriteAttractionDTO dto) {

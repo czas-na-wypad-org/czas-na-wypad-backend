@@ -20,9 +20,9 @@ public class AttractionFavouriteController {
 
     private final FavouriteAttractionService favouriteService;
 
-    @GetMapping
-    ResponseEntity<?> getFavouritesInfo(@RequestBody @Valid User user) {
-        List<FavouriteAttractionDTO> favouriteInfo = favouriteService.getFavouritesByUser(user);
+    @GetMapping("/{userId}")
+    ResponseEntity<?> getFavouritesInfo(@PathVariable Integer userId) {
+        List<FavouriteAttractionDTO> favouriteInfo = favouriteService.getFavouritesByUser(userId);
         return ResponseEntity.ok(favouriteInfo);
     }
 
