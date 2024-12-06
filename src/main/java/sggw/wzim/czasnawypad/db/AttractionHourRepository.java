@@ -9,6 +9,8 @@ import java.util.List;
 
 @Hidden
 @Repository
-public interface AttractionHourRepository extends JpaRepository<AttractionHour, Long> {
-    List<AttractionHour> findByAttractionId(Long attractionId);
+public interface AttractionHourRepository extends JpaRepository<AttractionHour, Integer> {
+
+    List<AttractionHour> findByAttractionId(Integer attractionId);
+
 }

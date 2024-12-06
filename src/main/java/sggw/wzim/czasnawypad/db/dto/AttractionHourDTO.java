@@ -1,12 +1,14 @@
-package sggw.wzim.czasnawypad.dto;
+package sggw.wzim.czasnawypad.db.dto;
 
 import lombok.Data;
 
 @Data
 public class AttractionHourDTO {
-    private Long id;
-    private Long attractionId;
-    private String openingTime;
-    private String closingTime;
+
+    private Integer id;
+    private Integer attractionId;
+    private String hourFrom;
+    private String hourTo;
     private String dayOfWeek;
+
 }

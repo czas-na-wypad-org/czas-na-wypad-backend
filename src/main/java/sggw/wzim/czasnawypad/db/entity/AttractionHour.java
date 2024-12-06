@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -12,19 +14,22 @@ import lombok.Data;
 @Table(name = "attraction_hour")
 @Data
 public class AttractionHour {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "attraction_id", nullable = false)
-    private Long attractionId;
+    @ManyToOne
+    @JoinColumn(name = "attraction_id", referencedColumnName = "id")
+    private Attraction attraction;
 
-    @Column(name = "opening_time", nullable = false)
-    private String openingTime;
+    @Column(name = "hour_from", nullable = false)
+    private String hourFrom;
 
-    @Column(name = "closing_time", nullable = false)
-    private String closingTime;
+    @Column(name = "hour_to", nullable = false)
+    private String hourTo;
 
     @Column(name = "day_of_week", nullable = false)
     private String dayOfWeek;
+
 }

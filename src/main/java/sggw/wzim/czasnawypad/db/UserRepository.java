@@ -10,5 +10,7 @@ import java.util.Optional;
 @Hidden
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
+
     Optional<User> findByLogin(String login);
+
 }

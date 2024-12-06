@@ -13,14 +13,15 @@ import sggw.wzim.czasnawypad.db.UserRepository;
 import sggw.wzim.czasnawypad.db.dto.LoginUserDTO;
 import sggw.wzim.czasnawypad.db.dto.RegisterUserDTO;
 import sggw.wzim.czasnawypad.db.entity.User;
-import sggw.wzim.czasnawypad.mapper.UserDTOMapper;
+import sggw.wzim.czasnawypad.mapper.UserMapper;
 import sggw.wzim.czasnawypad.model.JwtResponse;
 
 @Service
 @AllArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
-    private final UserDTOMapper userDTOMapper;
+    private final UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private TokenService tokenService;
     private AuthenticationManager authenticationManager;
@@ -41,7 +42,7 @@ public class UserService {
             throw new AccessDeniedException("User already exists");
         }
 
-        User user = userDTOMapper.fromRegisterUserDTO(registerUserDto);
+        User user = userMapper.fromRegisterUserDTO(registerUserDto);
 
         setUserToSave(user);
         return userRepository.save(user).getId();
@@ -72,4 +73,5 @@ public class UserService {
         userToSave.setRoles("ROLE_USER");
         userToSave.setPassword(bCryptPasswordEncoder.encode(userToSave.getPassword()));
     }
+
 }

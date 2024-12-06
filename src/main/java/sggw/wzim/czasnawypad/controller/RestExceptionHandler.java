@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +41,16 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleAccessDeniedException(AccessDeniedException ex) {
         log.error(ex.getMessage(), ex);
         HttpStatus status = HttpStatus.FORBIDDEN;
+        return handleExceptionInternal(status);
+    }
+
+    @ExceptionHandler({
+            UsernameNotFoundException.class,
+            InvalidBearerTokenException.class
+    })
+    public ResponseEntity<ErrorResponseDTO> handleUsernameNotFoundException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         return handleExceptionInternal(status);
     }
 
