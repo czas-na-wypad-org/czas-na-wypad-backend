@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import sggw.wzim.czasnawypad.exception.ApplicationExceptions;
 import sggw.wzim.czasnawypad.model.ErrorResponseDTO;
 
 @RestControllerAdvice
@@ -55,8 +56,32 @@ public class RestExceptionHandler {
         return handleExceptionInternal(status);
     }
 
+    @ExceptionHandler(ApplicationExceptions.AttractionNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAttractionNotFoundException(ApplicationExceptions.AttractionNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return handleExceptionInternal(status, ex.getMessage());
+    }
+
+    @ExceptionHandler(ApplicationExceptions.UserNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUserNotFoundException(ApplicationExceptions.UserNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return handleExceptionInternal(status, ex.getMessage());
+    }
+
+    @ExceptionHandler(ApplicationExceptions.RatingNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleRatingNotFoundException(ApplicationExceptions.RatingNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return handleExceptionInternal(status, ex.getMessage());
+    }
+
     private ResponseEntity<ErrorResponseDTO> handleExceptionInternal(HttpStatus status) {
         return new ResponseEntity<>(new ErrorResponseDTO(status.value(), status.getReasonPhrase()), status);
     }
 
+    private ResponseEntity<ErrorResponseDTO> handleExceptionInternal(HttpStatus status, String message) {
+        return new ResponseEntity<>(new ErrorResponseDTO(status.value(), message), status);
+    }
 }
