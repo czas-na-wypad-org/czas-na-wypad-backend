@@ -10,6 +10,7 @@ import sggw.wzim.czasnawypad.db.dto.FavouriteAttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.db.entity.FavouriteAttraction;
 import sggw.wzim.czasnawypad.db.entity.User;
+import sggw.wzim.czasnawypad.mapper.FavouriteAttractionDTOMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class FavouriteAttractionService {
 	private final FavouriteAttractionRepository favouriteRepository;
 	private final AttractionRepository attractionRepository;
 	private final UserRepository userRepository;
+	private final FavouriteAttractionDTOMapper mapper;
 
 	public List<FavouriteAttractionDTO> getFavouritesByUser (Integer userId) {
 		return favouriteRepository.findByUserId(userId).stream().map(this::toDto).collect(Collectors.toList());
@@ -38,12 +40,7 @@ public class FavouriteAttractionService {
 	}
 	
     private FavouriteAttractionDTO toDto(FavouriteAttraction favourite) {
-        return FavouriteAttractionDTO.builder()
-            .id(favourite.getId())
-            .attractionId(favourite.getAttraction().getId())
-			.userId(favourite.getUser().getId())
-			.build();
+		return mapper.toDto(favourite);
 	}
-	
-	
+
 }	
