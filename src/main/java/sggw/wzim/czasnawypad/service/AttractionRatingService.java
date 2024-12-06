@@ -16,6 +16,7 @@ import sggw.wzim.czasnawypad.db.dto.CreateAttractionRatingDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.db.entity.AttractionRating;
 import sggw.wzim.czasnawypad.db.entity.User;
+import sggw.wzim.czasnawypad.mapper.AttractionRatingMapper;
 import sggw.wzim.czasnawypad.repository.AttractionRatingRepository;
 import sggw.wzim.czasnawypad.repository.UserRepository;
 
@@ -25,16 +26,16 @@ public class AttractionRatingService {
     private final AttractionRatingRepository ratingRepository;
     private final AttractionRepository attractionRepository;
     private final UserRepository userRepository;
+    private final AttractionRatingMapper mapper;
 
     public List<AttractionRatingDTO> getRatingsForAttraction(Integer attractionId) {
         List<AttractionRating> ratings = ratingRepository.findByAttractionId(attractionId);
-        return ratings.stream()
-                      .map(this::toDto)
-                      .collect(Collectors.toList());
+        return mapper.toDtoList(ratings);
     }
     
     public List<AttractionRatingDTO> getRatingsByUser(Integer userId) {
-        return ratingRepository.findByUserId(userId).stream().map(this::toDto).collect(Collectors.toList());
+        List<AttractionRating> ratings = ratingRepository.findByUserId(userId);
+        return mapper.toDtoList(ratings);
     }
 
     public AttractionRatingDTO addRating(CreateAttractionRatingDTO dto) {
@@ -50,7 +51,7 @@ public class AttractionRatingService {
                 .notes(dto.getNotes())
                 .date(date)
                 .build();
-        return toDto(ratingRepository.save(rating));
+        return mapper.toDto(ratingRepository.save(rating));
     }
 
     public AttractionRatingDTO updateRating(Integer id, Integer userId, CreateAttractionRatingDTO dto) {
@@ -61,22 +62,10 @@ public class AttractionRatingService {
         }
         rating.setRating(dto.getRating());
         rating.setNotes(dto.getNotes());
-        return toDto(ratingRepository.save(rating));
+        return mapper.toDto(ratingRepository.save(rating));
     }
 
     public List<AttractionAverageRatingDTO> findAttractionsByMinimumAverageRating(double minRating) {
         return ratingRepository.findAttractionsByMinimumAverageRating(minRating);
-    }
-
-
-    private AttractionRatingDTO toDto(AttractionRating rating) {
-        return AttractionRatingDTO.builder()
-                .id(rating.getId())
-                .attractionId(rating.getAttraction().getId())
-                .attractionName(rating.getAttraction().getName())
-                .rating(rating.getRating())
-                .notes(rating.getNotes())
-                .date(rating.getDate())
-                .build();
     }
 }
