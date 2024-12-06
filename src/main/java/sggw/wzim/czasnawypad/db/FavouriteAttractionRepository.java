@@ -14,5 +14,4 @@ public interface FavouriteAttractionRepository extends JpaRepository<FavouriteAt
     List<FavouriteAttraction> findByUserId(Integer userId);
     List<FavouriteAttraction> findByAttractionId(Integer attractionId);
 
-
 }
