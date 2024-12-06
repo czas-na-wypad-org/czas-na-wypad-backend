@@ -12,7 +12,7 @@ import java.util.List;
         unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface FavouriteAttractionDTOMapper {
     @Mapping(target = "attractionId", source = "attraction.id")
-    @Mapping(target = "userId", source = "user.Id")
+    @Mapping(target = "userId", source = "user.id")
     FavouriteAttractionDTO toDto(FavouriteAttraction fav);
 
     List<FavouriteAttractionDTO> toDtoList(List<FavouriteAttraction> fav);
