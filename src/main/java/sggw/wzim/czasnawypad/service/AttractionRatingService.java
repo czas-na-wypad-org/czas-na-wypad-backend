@@ -16,6 +16,7 @@ import sggw.wzim.czasnawypad.db.dto.CreateAttractionRatingDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.db.entity.AttractionRating;
 import sggw.wzim.czasnawypad.db.entity.User;
+import sggw.wzim.czasnawypad.exception.ApplicationExceptions;
 import sggw.wzim.czasnawypad.mapper.AttractionRatingMapper;
 import sggw.wzim.czasnawypad.repository.AttractionRatingRepository;
 import sggw.wzim.czasnawypad.repository.UserRepository;
@@ -40,9 +41,9 @@ public class AttractionRatingService {
 
     public AttractionRatingDTO addRating(CreateAttractionRatingDTO dto) {
         Attraction attraction = attractionRepository.findById(dto.getAttractionId())
-                .orElseThrow(() -> new IllegalArgumentException("Attraction not found"));
+                .orElseThrow(() -> new ApplicationExceptions.AttractionNotFoundException("Attraction not found"));
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException(("User not found")));
+                .orElseThrow(() -> new ApplicationExceptions.UserNotFoundException(("User not found")));
         Date date = new Date();
         AttractionRating rating = AttractionRating.builder()
                 .user(user)
@@ -56,9 +57,9 @@ public class AttractionRatingService {
 
     public AttractionRatingDTO updateRating(Integer id, Integer userId, CreateAttractionRatingDTO dto) {
         AttractionRating rating = ratingRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Rating not found"));
+                .orElseThrow(() -> new ApplicationExceptions.RatingNotFoundException("Rating not found"));
         if (rating.getUser().getId()!=(userId)) {
-            throw new SecurityException("You can only update your own ratings.");
+            throw new ApplicationExceptions.NotYourRatingException("You can only update your own ratings!");
         }
         rating.setRating(dto.getRating());
         rating.setNotes(dto.getNotes());
