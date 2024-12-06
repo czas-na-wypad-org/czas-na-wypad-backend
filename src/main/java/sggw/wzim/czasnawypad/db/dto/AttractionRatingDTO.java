@@ -1,17 +1,24 @@
 package sggw.wzim.czasnawypad.db.dto;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class AttractionRatingDTO {
     private Integer id;
     private Integer attractionId;
     private String attractionName;
-    private Byte rating;
+    private Integer rating;
     private String notes;
-    private LocalDate date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
 }
