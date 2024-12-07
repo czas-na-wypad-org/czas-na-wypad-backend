@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -46,7 +46,6 @@ public class User {
 
     @Column(name = "ROLES", nullable = false)
     private String roles;
-
 
     public void updateFrom(User source) {
         password = source.password;

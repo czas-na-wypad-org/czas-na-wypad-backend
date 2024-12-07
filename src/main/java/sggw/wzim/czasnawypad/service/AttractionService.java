@@ -45,4 +45,8 @@ public class AttractionService {
         return attractionMapper.fromList(attractions);
     }
 
+    public void deleteItem(Integer id) {
+        log.debug("deleteItem() called");
+        attractionRepository.deleteById(id);
+    }
 }
