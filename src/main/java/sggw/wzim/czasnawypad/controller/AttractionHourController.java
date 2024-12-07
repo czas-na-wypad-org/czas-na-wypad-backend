@@ -1,14 +1,17 @@
 package sggw.wzim.czasnawypad.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import sggw.wzim.czasnawypad.dto.AttractionHourDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import sggw.wzim.czasnawypad.db.dto.AttractionHourDTO;
 import sggw.wzim.czasnawypad.service.AttractionHourService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/attraction-hours")
+@RequestMapping("/attraction-hours")
 public class AttractionHourController {
 
     private final AttractionHourService service;
@@ -18,23 +21,8 @@ public class AttractionHourController {
     }
 
     @GetMapping("/{attractionId}")
-    public ResponseEntity<List<AttractionHourDTO>> getHoursByAttractionId(@PathVariable Long attractionId) {
+    public ResponseEntity<List<AttractionHourDTO>> getHoursByAttractionId(@PathVariable Integer attractionId) {
         return ResponseEntity.ok(service.getHoursByAttractionId(attractionId));
     }
 
-    @PostMapping
-    public ResponseEntity<AttractionHourDTO> createAttractionHour(@RequestBody AttractionHourDTO dto) {
-        return ResponseEntity.ok(service.createAttractionHour(dto));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<AttractionHourDTO> updateAttractionHour(@PathVariable Long id, @RequestBody AttractionHourDTO dto) {
-        return ResponseEntity.ok(service.updateAttractionHour(id, dto));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttractionHour(@PathVariable Long id) {
-        service.deleteAttractionHour(id);
-        return ResponseEntity.noContent().build();
-    }
 }

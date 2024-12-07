@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("AttractionDTOMapper Tests")
-class AttractionDTOMapperTest {
+class AttractionMapperTest {
 
     private static final String ATTRACTION_NAME = "someName";
     private static final String WEBSITE = "https://example.com";
@@ -33,11 +33,11 @@ class AttractionDTOMapperTest {
     private static final String PRICE_LEVEL = "HIGH";
     private static final String TYPE = "RESTAURANT";
 
-    private AttractionDTOMapper underTest;
+    private AttractionMapper underTest;
 
     @BeforeEach
     void init() {
-        underTest = new AttractionDTOMapperImpl();
+        underTest = new AttractionMapperImpl();
     }
 
     @ParameterizedTest(name = "{index} => input={0}, expected={1}")

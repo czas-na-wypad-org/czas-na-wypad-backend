@@ -15,12 +15,11 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         unmappedSourcePolicy = ReportingPolicy.ERROR,
         unmappedTargetPolicy = ReportingPolicy.ERROR)
-public interface AttractionDTOMapper {
+public interface AttractionMapper {
 
-    @BeanMapping(ignoreUnmappedSourceProperties = {"id", "photo", "isDeleted"})
+    @BeanMapping(ignoreUnmappedSourceProperties = {"photo", "isDeleted"})
     AttractionDTO fromEntity(Attraction attraction);
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "photo", ignore = true)
     @Mapping(target = "isDeleted", ignore = true)
     Attraction fromDTO(AttractionDTO attractionDTO);

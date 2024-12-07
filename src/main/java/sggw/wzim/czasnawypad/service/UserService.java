@@ -1,12 +1,7 @@
 package sggw.wzim.czasnawypad.service;
 
-import sggw.wzim.czasnawypad.db.dto.RegisterUserDTO;
-import sggw.wzim.czasnawypad.db.entity.User;
-import sggw.wzim.czasnawypad.db.dto.LoginUserDTO;
-import sggw.wzim.czasnawypad.mapper.UserDTOMapper;
-import sggw.wzim.czasnawypad.model.JwtResponse;
-import sggw.wzim.czasnawypad.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,12 +9,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sggw.wzim.czasnawypad.db.UserRepository;
+import sggw.wzim.czasnawypad.db.dto.LoginUserDTO;
+import sggw.wzim.czasnawypad.db.dto.RegisterUserDTO;
+import sggw.wzim.czasnawypad.db.entity.User;
+import sggw.wzim.czasnawypad.mapper.UserMapper;
+import sggw.wzim.czasnawypad.model.JwtResponse;
 
 @Service
 @AllArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
-    private final UserDTOMapper userDTOMapper;
+    private final UserMapper userMapper;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private TokenService tokenService;
     private AuthenticationManager authenticationManager;
@@ -30,18 +32,17 @@ public class UserService {
                         new UsernamePasswordAuthenticationToken(
                                 loginUserDto.getLogin(), loginUserDto.getPassword()
                         ));
-        JwtResponse jwtResponse =new JwtResponse(tokenService.generateToken(authentication));
 
-        return jwtResponse;
+        return new JwtResponse(tokenService.generateToken(authentication));
     }
 
     @Transactional(rollbackFor = Exception.class)
     public int registerUser(RegisterUserDTO registerUserDto) {
         if (userRepository.findByLogin(registerUserDto.getLogin()).isPresent()) {
-            return -1;
+            throw new AccessDeniedException("User already exists");
         }
 
-        User user = userDTOMapper.fromRegisterUserDTO(registerUserDto);
+        User user = userMapper.fromRegisterUserDTO(registerUserDto);
 
         setUserToSave(user);
         return userRepository.save(user).getId();
@@ -72,4 +73,5 @@ public class UserService {
         userToSave.setRoles("ROLE_USER");
         userToSave.setPassword(bCryptPasswordEncoder.encode(userToSave.getPassword()));
     }
+
 }

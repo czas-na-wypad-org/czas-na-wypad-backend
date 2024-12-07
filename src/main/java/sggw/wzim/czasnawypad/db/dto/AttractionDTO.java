@@ -1,6 +1,7 @@
 package sggw.wzim.czasnawypad.db.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,12 @@ import org.locationtech.jts.geom.Point;
 @ToString
 @EqualsAndHashCode
 public class AttractionDTO {
+
+    @NotNull
+    @Min(1)
+    @Schema(description = "ID of the attraction",
+            example = "1")
+    private Integer id;
 
     @NotNull
     @Size(min = 1, max = 200)

@@ -1,4 +1,4 @@
-package sggw.wzim.czasnawypad.repository;
+package sggw.wzim.czasnawypad.db;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.data.repository.CrudRepository;
@@ -10,5 +10,7 @@ import java.util.Optional;
 @Hidden
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
+
     Optional<User> findByLogin(String login);
+
 }

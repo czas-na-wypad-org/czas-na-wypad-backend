@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class SecurityUser implements UserDetails {
+
     private final User user;
 
     public SecurityUser(final User user) {
@@ -54,4 +55,5 @@ public class SecurityUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

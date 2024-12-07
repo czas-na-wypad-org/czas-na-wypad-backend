@@ -19,6 +19,7 @@ public class ErrorResponseDTO {
 
     @Schema(description = "HttpStatus status code of the error", example = "401")
     private Integer statusCode;
+
     @Schema(description = "Message of the error", example = "Unauthorized")
     private String message;
 

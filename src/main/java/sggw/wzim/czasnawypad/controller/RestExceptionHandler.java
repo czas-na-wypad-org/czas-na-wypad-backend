@@ -4,6 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import sggw.wzim.czasnawypad.model.ErrorResponseDTO;
@@ -21,10 +26,31 @@ public class RestExceptionHandler {
         return handleExceptionInternal(status);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler({
+            HttpMessageNotReadableException.class,
+            MethodArgumentNotValidException.class,
+            BindException.class
+    })
     public ResponseEntity<ErrorResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         log.error(ex.getMessage(), ex);
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        return handleExceptionInternal(status);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAccessDeniedException(AccessDeniedException ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        return handleExceptionInternal(status);
+    }
+
+    @ExceptionHandler({
+            UsernameNotFoundException.class,
+            InvalidBearerTokenException.class
+    })
+    public ResponseEntity<ErrorResponseDTO> handleUsernameNotFoundException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         return handleExceptionInternal(status);
     }
 
