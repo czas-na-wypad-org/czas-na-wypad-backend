@@ -6,3 +6,6 @@ springdoc:
     path: /api-docs
 server:
   shutdown: graceful
+rsa:
+  private-key: classpath:certs/private_key.pem
+  public-key: classpath:certs/public_key.pem

@@ -12,6 +12,3 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
-rsa:
-  private-key: classpath:certs/private_key.pem
-  public-key: classpath:certs/public_key.pem
