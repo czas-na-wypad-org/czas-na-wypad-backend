@@ -13,8 +13,6 @@ public class CreateAttractionRatingDTO {
     @NotNull
     private Integer attractionId;
     @NotNull
-    private Integer userId;
-    @NotNull
     @Min(1)
     @Max(5)
     private Integer rating;
