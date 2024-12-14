@@ -7,8 +7,6 @@ import org.springframework.security.oauth2.server.resource.InvalidBearerTokenExc
 import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.UserRepository;
-import sggw.wzim.czasnawypad.db.dto.AttractionAverageRatingDTO;
-import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.dto.AttractionRatingDTO;
 import sggw.wzim.czasnawypad.db.dto.CreateAttractionRatingDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
@@ -17,7 +15,7 @@ import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.exception.ApplicationExceptions;
 import sggw.wzim.czasnawypad.mapper.AttractionMapper;
 import sggw.wzim.czasnawypad.mapper.AttractionRatingMapper;
-import sggw.wzim.czasnawypad.repository.AttractionRatingRepository;
+import sggw.wzim.czasnawypad.db.AttractionRatingRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -70,19 +68,6 @@ public class AttractionRatingService {
         rating.setRating(dto.getRating());
         rating.setNotes(dto.getNotes());
         return mapper.toDto(ratingRepository.save(rating));
-    }
-
-    public List<AttractionDTO> findAttractionsByMinimumAverageRating(double minRating) {
-        List<AttractionAverageRatingDTO> results = ratingRepository.findAttractionsByMinimumAverageRating(minRating);
-
-        // Mapowanie wyników do listy atrakcji
-        List<Integer> attractionIds = results.stream()
-                .map(AttractionAverageRatingDTO::getAttractionId) // ID atrakcji
-                .toList();
-
-        // Pobierz pełne obiekty Attraction
-        List<Attraction> attractionRepositoryAllById = attractionRepository.findAllById(attractionIds);
-        return attractionMapper.fromList(attractionRepositoryAllById);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {

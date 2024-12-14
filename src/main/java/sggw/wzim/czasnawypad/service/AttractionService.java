@@ -25,22 +25,41 @@ public class AttractionService {
                                                               BigDecimal longitude,
                                                               BigDecimal maxDistance,
                                                               String type,
-                                                              String priceLevel) {
+                                                              String priceLevel,
+                                                              Double minRating) {
         log.debug("getAllAttractionsByUserFilters() called");
         List<Attraction> attractions = new ArrayList<>();
-        if (StringUtils.isBlank(priceLevel) && StringUtils.isBlank(type)) {
-            attractions = attractionRepository.findAllByIsDeletedFalseAndWithingMaxDistance(latitude,
-                                                                                            longitude,
-                                                                                            maxDistance);
-        } else if (StringUtils.isBlank(priceLevel) && StringUtils.isNotBlank(type)) {
-            attractions = attractionRepository
-                    .findAllByIsDeletedFalseAndType(type, latitude, longitude, maxDistance);
-        } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isBlank(type)) {
-            attractions = attractionRepository
-                    .findAllByIsDeletedFalseAndPriceLevel(priceLevel, latitude, longitude, maxDistance);
-        } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isNotBlank(type)) {
-            attractions = attractionRepository
-                    .findAllByIsDeletedFalseAndPriceLevelAndType(priceLevel, type, latitude, longitude, maxDistance);
+        if (minRating != null) {
+            if (StringUtils.isBlank(priceLevel) && StringUtils.isBlank(type)) {
+                attractions = attractionRepository.findAllByIsDeletedFalseAndWithingMaxDistanceAndMinRating(latitude,
+                                                                                                longitude,
+                                                                                                maxDistance,
+                                                                                                minRating);
+            } else if (StringUtils.isBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndTypeAndMinRating(type, latitude, longitude, maxDistance, minRating);
+            } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndPriceLevelAndMinRating(priceLevel, latitude, longitude, maxDistance, minRating);
+            } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndPriceLevelAndTypeAndMinRating(priceLevel, type, latitude, longitude, maxDistance, minRating);
+            }
+        } else {
+            if (StringUtils.isBlank(priceLevel) && StringUtils.isBlank(type)) {
+                attractions = attractionRepository.findAllByIsDeletedFalseAndWithingMaxDistance(latitude,
+                                                                                                longitude,
+                                                                                                maxDistance);
+            } else if (StringUtils.isBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndType(type, latitude, longitude, maxDistance);
+            } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndPriceLevel(priceLevel, latitude, longitude, maxDistance);
+            } else if (StringUtils.isNotBlank(priceLevel) && StringUtils.isNotBlank(type)) {
+                attractions = attractionRepository
+                        .findAllByIsDeletedFalseAndPriceLevelAndType(priceLevel, type, latitude, longitude, maxDistance);
+            }
         }
         return attractionMapper.fromList(attractions);
     }

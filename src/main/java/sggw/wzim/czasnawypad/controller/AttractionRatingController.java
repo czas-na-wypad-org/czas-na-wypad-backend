@@ -47,10 +47,5 @@ public class AttractionRatingController {
         return ResponseEntity.ok(updatedRatingDTO);
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<List<AttractionDTO>> filterAttractionsByRating(@RequestParam double minRating) { //TODO przeniesc do AttractionController
-        List<AttractionDTO> attractionsByRating = ratingService.findAttractionsByMinimumAverageRating(minRating);
-        return ResponseEntity.ok(attractionsByRating);
-    }
 
 }
