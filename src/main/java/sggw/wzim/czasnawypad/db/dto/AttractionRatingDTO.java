@@ -1,10 +1,15 @@
 package sggw.wzim.czasnawypad.db.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
@@ -20,6 +25,6 @@ public class AttractionRatingDTO {
     private Integer rating;
     private String notes;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date date;
+    private LocalDate date;
     private String userName;
 }

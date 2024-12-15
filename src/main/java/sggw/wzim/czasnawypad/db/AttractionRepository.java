@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import sggw.wzim.czasnawypad.db.dto.AttractionAverageRatingDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
 
 import java.math.BigDecimal;
@@ -109,7 +108,7 @@ public interface AttractionRepository extends JpaRepository<Attraction, Integer>
             @Param("latitude") BigDecimal latitude,
             @Param("longitude") BigDecimal longitude,
             @Param("maxDistance") BigDecimal maxDistance,
-            @Param("minRating") Double minRating);
+            @Param("minRating") BigDecimal minRating);
 
     @Query(value = """
         SELECT a.*, 
@@ -134,7 +133,7 @@ public interface AttractionRepository extends JpaRepository<Attraction, Integer>
             @Param("latitude") BigDecimal latitude,
             @Param("longitude") BigDecimal longitude,
             @Param("maxDistance") BigDecimal maxDistance,
-            @Param("minRating") Double minRating);
+            @Param("minRating") BigDecimal minRating);
 
     @Query(value = """
         SELECT a.*, 
@@ -159,7 +158,7 @@ public interface AttractionRepository extends JpaRepository<Attraction, Integer>
             @Param("latitude") BigDecimal latitude,
             @Param("longitude") BigDecimal longitude,
             @Param("maxDistance") BigDecimal maxDistance,
-            @Param("minRating") Double minRating);
+            @Param("minRating") BigDecimal minRating);
 
     @Query(value = """
         SELECT a.*, 
@@ -186,6 +185,6 @@ public interface AttractionRepository extends JpaRepository<Attraction, Integer>
             @Param("latitude") BigDecimal latitude,
             @Param("longitude") BigDecimal longitude,
             @Param("maxDistance") BigDecimal maxDistance,
-            @Param("minRating") Double minRating);
+            @Param("minRating") BigDecimal minRating);
 
 }

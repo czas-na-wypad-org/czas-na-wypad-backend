@@ -20,8 +20,8 @@ public class ApplicationExceptions {
         }
     }
 
-    public static class NotYourRatingException extends RuntimeException {
-        public NotYourRatingException(String message) {
+    public static class RatingAccessDeniedException  extends RuntimeException {
+        public RatingAccessDeniedException (String message) {
             super(message);
         }
     }

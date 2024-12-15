@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 public class CreateAttractionRatingDTO {
@@ -17,5 +16,5 @@ public class CreateAttractionRatingDTO {
     @Max(5)
     private Integer rating;
     private String notes;
-    private Date date;
+    private LocalDate date;
 }

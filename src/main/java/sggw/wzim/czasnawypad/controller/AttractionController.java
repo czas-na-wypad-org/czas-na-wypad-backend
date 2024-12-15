@@ -73,7 +73,7 @@ public class AttractionController {
             @RequestParam(name = "maxDistance") BigDecimal maxDistance,
             @RequestParam(name = "type", required = false) String type,
             @RequestParam(name = "priceLevel", required = false) String priceLevel,
-            @RequestParam(name = "minRating", required = false) Double minRating) {
+            @RequestParam(name = "minRating", required = false) BigDecimal minRating) {
         log.debug("GET getAllAttractionsByUserFilters called");
         List<AttractionDTO> attractionsByDistanceFromCustomer = attractionService
                 .getAllAttractionsByUserFilters(latitude, longitude, maxDistance, type, priceLevel, minRating);

@@ -26,15 +26,15 @@ public class AttractionService {
                                                               BigDecimal maxDistance,
                                                               String type,
                                                               String priceLevel,
-                                                              Double minRating) {
+                                                              BigDecimal minRating) {
         log.debug("getAllAttractionsByUserFilters() called");
         List<Attraction> attractions = new ArrayList<>();
         if (minRating != null) {
             if (StringUtils.isBlank(priceLevel) && StringUtils.isBlank(type)) {
                 attractions = attractionRepository.findAllByIsDeletedFalseAndWithingMaxDistanceAndMinRating(latitude,
-                                                                                                longitude,
-                                                                                                maxDistance,
-                                                                                                minRating);
+                                                                                                            longitude,
+                                                                                                            maxDistance,
+                                                                                                            minRating);
             } else if (StringUtils.isBlank(priceLevel) && StringUtils.isNotBlank(type)) {
                 attractions = attractionRepository
                         .findAllByIsDeletedFalseAndTypeAndMinRating(type, latitude, longitude, maxDistance, minRating);

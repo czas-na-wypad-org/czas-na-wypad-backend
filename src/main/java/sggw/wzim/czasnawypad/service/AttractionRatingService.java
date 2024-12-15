@@ -13,11 +13,10 @@ import sggw.wzim.czasnawypad.db.entity.Attraction;
 import sggw.wzim.czasnawypad.db.entity.AttractionRating;
 import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.exception.ApplicationExceptions;
-import sggw.wzim.czasnawypad.mapper.AttractionMapper;
 import sggw.wzim.czasnawypad.mapper.AttractionRatingMapper;
 import sggw.wzim.czasnawypad.db.AttractionRatingRepository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,7 +25,6 @@ public class AttractionRatingService {
     private final AttractionRatingRepository ratingRepository;
     private final AttractionRepository attractionRepository;
     private final UserRepository userRepository;
-    private final AttractionMapper attractionMapper;
     private final UserService userService;
     private final AttractionRatingMapper mapper;
 
@@ -47,27 +45,27 @@ public class AttractionRatingService {
 
         User user = userRepository.findById(userService.getUserIdFromToken(getTokenFromRequest(request)))
                 .orElseThrow(() -> new ApplicationExceptions.UserNotFoundException(("User not found")));
-        Date date = new Date();
+//        Date date = new Date();
         AttractionRating rating = AttractionRating.builder()
                 .user(user)
                 .attraction(attraction)
                 .rating(dto.getRating())
                 .notes(dto.getNotes())
-                .date(date)
+                .date(LocalDate.now())
                 .build();
         return mapper.toDto(ratingRepository.save(rating));
     }
 
-    public AttractionRatingDTO updateRating(Integer id, HttpServletRequest request, CreateAttractionRatingDTO dto) {
+    public void updateRating(Integer id, HttpServletRequest request, CreateAttractionRatingDTO dto) {
         AttractionRating rating = ratingRepository.findById(id)
                 .orElseThrow(() -> new ApplicationExceptions.RatingNotFoundException("Rating not found"));
         int userId = userService.getUserIdFromToken(getTokenFromRequest(request));
         if (rating.getUser().getId() != (userId)) {
-            throw new ApplicationExceptions.NotYourRatingException("You can only update your own ratings!");
+            throw new ApplicationExceptions.RatingAccessDeniedException("You can only update your own ratings!");
         }
         rating.setRating(dto.getRating());
         rating.setNotes(dto.getNotes());
-        return mapper.toDto(ratingRepository.save(rating));
+        mapper.toDto(ratingRepository.save(rating));
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
