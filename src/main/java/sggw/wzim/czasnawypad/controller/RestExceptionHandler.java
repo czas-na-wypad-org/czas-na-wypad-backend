@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import sggw.wzim.czasnawypad.exception.ApplicationExceptions;
 import sggw.wzim.czasnawypad.model.ErrorResponseDTO;
 
 @RestControllerAdvice
@@ -55,8 +55,22 @@ public class RestExceptionHandler {
         return handleExceptionInternal(status);
     }
 
+    @ExceptionHandler({
+            ApplicationExceptions.AttractionNotFoundException.class,
+            ApplicationExceptions.UserNotFoundException.class,
+            ApplicationExceptions.RatingNotFoundException.class
+    })
+    public ResponseEntity<ErrorResponseDTO> handleNotFoundExceptions(RuntimeException ex) {
+        log.error(ex.getMessage(), ex);
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return handleExceptionInternal(status, ex.getMessage());
+    }
+
     private ResponseEntity<ErrorResponseDTO> handleExceptionInternal(HttpStatus status) {
         return new ResponseEntity<>(new ErrorResponseDTO(status.value(), status.getReasonPhrase()), status);
     }
 
+    private ResponseEntity<ErrorResponseDTO> handleExceptionInternal(HttpStatus status, String message) {
+        return new ResponseEntity<>(new ErrorResponseDTO(status.value(), message), status);
+    }
 }
