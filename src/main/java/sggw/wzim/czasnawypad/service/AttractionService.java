@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import sggw.wzim.czasnawypad.db.AttractionRepository;
 import sggw.wzim.czasnawypad.db.dto.AttractionDTO;
 import sggw.wzim.czasnawypad.db.entity.Attraction;
+import sggw.wzim.czasnawypad.exception.AttractionNotFoundException;
 import sggw.wzim.czasnawypad.mapper.AttractionMapper;
 
 import java.math.BigDecimal;
@@ -62,6 +63,13 @@ public class AttractionService {
             }
         }
         return attractionMapper.fromList(attractions);
+    }
+
+    public AttractionDTO getAttractionById(Integer id) {
+        log.debug("getAttractionById() called");
+        Attraction attraction = attractionRepository.findById(id)
+                .orElseThrow(() -> new AttractionNotFoundException(id));
+        return attractionMapper.fromEntity(attraction);
     }
 
 }
