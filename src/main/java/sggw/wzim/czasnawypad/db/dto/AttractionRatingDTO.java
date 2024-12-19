@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class AttractionRatingDTO {
     private Integer id;
+    private Integer userId;
     private Integer attractionId;
     private String attractionName;
     private Integer rating;
@@ -27,4 +28,5 @@ public class AttractionRatingDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String userName;
+    private String userSurname;
 }
