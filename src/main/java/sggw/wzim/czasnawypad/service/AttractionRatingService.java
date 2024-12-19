@@ -45,7 +45,6 @@ public class AttractionRatingService {
 
         User user = userRepository.findById(userService.getUserIdFromToken(getTokenFromRequest(request)))
                 .orElseThrow(() -> new ApplicationExceptions.UserNotFoundException(("User not found")));
-//        Date date = new Date();
         AttractionRating rating = AttractionRating.builder()
                 .user(user)
                 .attraction(attraction)
