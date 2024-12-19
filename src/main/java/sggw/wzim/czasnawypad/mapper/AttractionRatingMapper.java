@@ -13,7 +13,9 @@ import java.util.List;
 public interface AttractionRatingMapper {
     @Mapping(target = "attractionId", source = "attraction.id")
     @Mapping(target = "attractionName", source = "attraction.name")
+    @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "userName", source = "user.name")
+    @Mapping(target = "userSurname", source = "user.surname")
     AttractionRatingDTO toDto(AttractionRating rating);
 
     List<AttractionRatingDTO> toDtoList(List<AttractionRating> ratings);
