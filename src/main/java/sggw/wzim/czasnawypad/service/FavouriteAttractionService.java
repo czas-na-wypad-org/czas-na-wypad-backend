@@ -25,7 +25,7 @@ public class FavouriteAttractionService {
 	private final FavouriteAttractionDTOMapper mapper;
 
 	public List<FavouriteAttractionDTO> getFavouritesByUser (Integer userId) {
-		return favouriteRepository.findByUserId(userId).stream().map(this::toDto).collect(Collectors.toList());
+		return favouriteRepository.findByUserId(userId).stream().map(mapper::toDto).collect(Collectors.toList());
 	}
 
 	public FavouriteAttractionDTO addFavourite(CreateFavouriteAttractionDTO dto) {
@@ -38,19 +38,15 @@ public class FavouriteAttractionService {
 					.user(user)
 					.attraction(attraction)
 					.build();
-			return toDto(favouriteRepository.save(favourite));
+			return mapper.toDto(favouriteRepository.save(favourite));
 		}
 		else
-			return toDto(favouriteRepository.findByAttractionId(dto.getAttractionId()).getFirst());
+			return mapper.toDto(favouriteRepository.findByAttractionId(dto.getAttractionId()).getFirst());
 
 	}
 
-	public void deleteFavourite(Integer toDelete) {
-		favouriteRepository.deleteById(toDelete);
-	}
-	
-    private FavouriteAttractionDTO toDto(FavouriteAttraction favourite) {
-		return mapper.toDto(favourite);
+	public void deleteFavourite(Integer favouriteId) {
+		favouriteRepository.deleteById(favouriteId);
 	}
 
 }	

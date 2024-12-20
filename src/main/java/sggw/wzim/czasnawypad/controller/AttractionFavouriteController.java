@@ -32,9 +32,9 @@ public class AttractionFavouriteController {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteFavourite(@PathVariable Integer id) {
-        favouriteService.deleteFavourite(id);
+    @DeleteMapping("/{favourite-id}")
+    ResponseEntity<Void> deleteFavourite(@PathVariable("favourite-id") Integer favouriteId) {
+        favouriteService.deleteFavourite(favouriteId);
         return ResponseEntity.noContent().build();
     }
 
