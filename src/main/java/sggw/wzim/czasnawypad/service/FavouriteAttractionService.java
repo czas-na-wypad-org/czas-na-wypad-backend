@@ -12,6 +12,7 @@ import sggw.wzim.czasnawypad.db.entity.FavouriteAttraction;
 import sggw.wzim.czasnawypad.db.entity.User;
 import sggw.wzim.czasnawypad.mapper.FavouriteAttractionDTOMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class FavouriteAttractionService {
 	private final FavouriteAttractionDTOMapper mapper;
 
 	public List<FavouriteAttractionDTO> getFavouritesByUser (Integer userId) {
-		return favouriteRepository.findByUserId(userId).stream().map(this::toDto).collect(Collectors.toList());
+		return favouriteRepository.findByUserId(userId).stream().map(mapper::toDto).collect(Collectors.toList());
 	}
 
 	public FavouriteAttractionDTO addFavourite(CreateFavouriteAttractionDTO dto) {
@@ -32,15 +33,20 @@ public class FavouriteAttractionService {
 				.orElseThrow(() -> new IllegalArgumentException("Attraction not found"));
 		User user = userRepository.findById(dto.getUserId())
 				.orElseThrow(() -> new IllegalArgumentException(("User not found")));
-		FavouriteAttraction favourite = FavouriteAttraction.builder()
-				.user(user)
-				.attraction(attraction)
-				.build();
-		return toDto(favouriteRepository.save(favourite));	
+		if (favouriteRepository.findByAttractionId(dto.getAttractionId()).isEmpty()) {
+			FavouriteAttraction favourite = FavouriteAttraction.builder()
+					.user(user)
+					.attraction(attraction)
+					.build();
+			return mapper.toDto(favouriteRepository.save(favourite));
+		}
+		else
+			return mapper.toDto(favouriteRepository.findByAttractionId(dto.getAttractionId()).getFirst());
+
 	}
-	
-    private FavouriteAttractionDTO toDto(FavouriteAttraction favourite) {
-		return mapper.toDto(favourite);
+
+	public void deleteFavourite(Integer favouriteId) {
+		favouriteRepository.deleteById(favouriteId);
 	}
 
 }	
