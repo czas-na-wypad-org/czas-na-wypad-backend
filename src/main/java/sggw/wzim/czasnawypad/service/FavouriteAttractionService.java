@@ -45,9 +45,8 @@ public class FavouriteAttractionService {
 
 	}
 
-	public List<FavouriteAttractionDTO> deleteFavourite(Integer toDelete) {
+	public void deleteFavourite(Integer toDelete) {
 		favouriteRepository.deleteById(toDelete);
-		return favouriteRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
 	}
 	
     private FavouriteAttractionDTO toDto(FavouriteAttraction favourite) {
