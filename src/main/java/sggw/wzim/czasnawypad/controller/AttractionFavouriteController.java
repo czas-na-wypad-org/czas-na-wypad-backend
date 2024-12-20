@@ -32,5 +32,10 @@ public class AttractionFavouriteController {
         return ResponseEntity.ok().body(result);
     }
 
+    @DeleteMapping
+    ResponseEntity<?> deleteFavourite(@RequestBody @Valid CreateFavouriteAttractionDTO toDelete) {
+        FavouriteAttractionDTO result = favouriteService.addFavourite(toDelete);
+        return ResponseEntity.ok().body(result);
+    }
 
 }
